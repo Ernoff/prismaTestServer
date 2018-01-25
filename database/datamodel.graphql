@@ -7,6 +7,6 @@ type Post {
 
 type State {
   id: ID! @unique
-  title: String!
+  title: String! @unique
   code: String!
 }

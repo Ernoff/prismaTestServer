@@ -7,9 +7,16 @@ type Query {
   state: [State!]!
 }
 
+input StateInput {
+  title: String!
+  code: String!
+}
+
 type Mutation {
   createDraft(title: String!, text: String): Post
   createState(title: String!, code: String): State
+  deleteState(title: String!): State
+  updateState(title: String!, input: StateInput!) : State
   deletePost(id: ID!): Post
   publish(id: ID!): Post
 }
