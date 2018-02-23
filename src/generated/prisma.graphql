@@ -27,6 +27,12 @@ type Individual implements Node {
   parkassociation: String!
 }
 
+type Permission implements Node {
+  id: ID!
+  name: String!
+  isAllowed: Boolean
+}
+
 type Post implements Node {
   id: ID!
   isPublished: Boolean!
@@ -46,6 +52,10 @@ type State implements Node {
 #
 
 type AggregateIndividual {
+  count: Int!
+}
+
+type AggregatePermission {
   count: Int!
 }
 
@@ -479,21 +489,27 @@ type Mutation {
   createPost(data: PostCreateInput!): Post!
   createState(data: StateCreateInput!): State!
   createIndividual(data: IndividualCreateInput!): Individual!
+  createPermission(data: PermissionCreateInput!): Permission!
   updatePost(data: PostUpdateInput!, where: PostWhereUniqueInput!): Post
   updateState(data: StateUpdateInput!, where: StateWhereUniqueInput!): State
   updateIndividual(data: IndividualUpdateInput!, where: IndividualWhereUniqueInput!): Individual
+  updatePermission(data: PermissionUpdateInput!, where: PermissionWhereUniqueInput!): Permission
   deletePost(where: PostWhereUniqueInput!): Post
   deleteState(where: StateWhereUniqueInput!): State
   deleteIndividual(where: IndividualWhereUniqueInput!): Individual
+  deletePermission(where: PermissionWhereUniqueInput!): Permission
   upsertPost(where: PostWhereUniqueInput!, create: PostCreateInput!, update: PostUpdateInput!): Post!
   upsertState(where: StateWhereUniqueInput!, create: StateCreateInput!, update: StateUpdateInput!): State!
   upsertIndividual(where: IndividualWhereUniqueInput!, create: IndividualCreateInput!, update: IndividualUpdateInput!): Individual!
+  upsertPermission(where: PermissionWhereUniqueInput!, create: PermissionCreateInput!, update: PermissionUpdateInput!): Permission!
   updateManyPosts(data: PostUpdateInput!, where: PostWhereInput!): BatchPayload!
   updateManyStates(data: StateUpdateInput!, where: StateWhereInput!): BatchPayload!
   updateManyIndividuals(data: IndividualUpdateInput!, where: IndividualWhereInput!): BatchPayload!
+  updateManyPermissions(data: PermissionUpdateInput!, where: PermissionWhereInput!): BatchPayload!
   deleteManyPosts(where: PostWhereInput!): BatchPayload!
   deleteManyStates(where: StateWhereInput!): BatchPayload!
   deleteManyIndividuals(where: IndividualWhereInput!): BatchPayload!
+  deleteManyPermissions(where: PermissionWhereInput!): BatchPayload!
 }
 
 enum MutationType {
@@ -511,6 +527,103 @@ type PageInfo {
   hasPreviousPage: Boolean!
   startCursor: String
   endCursor: String
+}
+
+type PermissionConnection {
+  pageInfo: PageInfo!
+  edges: [PermissionEdge]!
+  aggregate: AggregatePermission!
+}
+
+input PermissionCreateInput {
+  name: String!
+  isAllowed: Boolean
+}
+
+type PermissionEdge {
+  node: Permission!
+  cursor: String!
+}
+
+enum PermissionOrderByInput {
+  id_ASC
+  id_DESC
+  name_ASC
+  name_DESC
+  isAllowed_ASC
+  isAllowed_DESC
+  updatedAt_ASC
+  updatedAt_DESC
+  createdAt_ASC
+  createdAt_DESC
+}
+
+type PermissionPreviousValues {
+  id: ID!
+  name: String!
+  isAllowed: Boolean
+}
+
+type PermissionSubscriptionPayload {
+  mutation: MutationType!
+  node: Permission
+  updatedFields: [String!]
+  previousValues: PermissionPreviousValues
+}
+
+input PermissionSubscriptionWhereInput {
+  AND: [PermissionSubscriptionWhereInput!]
+  OR: [PermissionSubscriptionWhereInput!]
+  mutation_in: [MutationType!]
+  updatedFields_contains: String
+  updatedFields_contains_every: [String!]
+  updatedFields_contains_some: [String!]
+  node: PermissionWhereInput
+}
+
+input PermissionUpdateInput {
+  name: String
+  isAllowed: Boolean
+}
+
+input PermissionWhereInput {
+  AND: [PermissionWhereInput!]
+  OR: [PermissionWhereInput!]
+  id: ID
+  id_not: ID
+  id_in: [ID!]
+  id_not_in: [ID!]
+  id_lt: ID
+  id_lte: ID
+  id_gt: ID
+  id_gte: ID
+  id_contains: ID
+  id_not_contains: ID
+  id_starts_with: ID
+  id_not_starts_with: ID
+  id_ends_with: ID
+  id_not_ends_with: ID
+  name: String
+  name_not: String
+  name_in: [String!]
+  name_not_in: [String!]
+  name_lt: String
+  name_lte: String
+  name_gt: String
+  name_gte: String
+  name_contains: String
+  name_not_contains: String
+  name_starts_with: String
+  name_not_starts_with: String
+  name_ends_with: String
+  name_not_ends_with: String
+  isAllowed: Boolean
+  isAllowed_not: Boolean
+}
+
+input PermissionWhereUniqueInput {
+  id: ID
+  name: String
 }
 
 type PostConnection {
@@ -632,12 +745,15 @@ type Query {
   posts(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Post]!
   states(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [State]!
   individuals(where: IndividualWhereInput, orderBy: IndividualOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Individual]!
+  permissions(where: PermissionWhereInput, orderBy: PermissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): [Permission]!
   post(where: PostWhereUniqueInput!): Post
   state(where: StateWhereUniqueInput!): State
   individual(where: IndividualWhereUniqueInput!): Individual
+  permission(where: PermissionWhereUniqueInput!): Permission
   postsConnection(where: PostWhereInput, orderBy: PostOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PostConnection!
   statesConnection(where: StateWhereInput, orderBy: StateOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): StateConnection!
   individualsConnection(where: IndividualWhereInput, orderBy: IndividualOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): IndividualConnection!
+  permissionsConnection(where: PermissionWhereInput, orderBy: PermissionOrderByInput, skip: Int, after: String, before: String, first: Int, last: Int): PermissionConnection!
   node(id: ID!): Node
 }
 
@@ -754,4 +870,5 @@ type Subscription {
   post(where: PostSubscriptionWhereInput): PostSubscriptionPayload
   state(where: StateSubscriptionWhereInput): StateSubscriptionPayload
   individual(where: IndividualSubscriptionWhereInput): IndividualSubscriptionPayload
+  permission(where: PermissionSubscriptionWhereInput): PermissionSubscriptionPayload
 }

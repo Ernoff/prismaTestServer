@@ -17,6 +17,9 @@ const resolvers = {
     },
     post(parent, { id }, ctx, info) {
       return ctx.db.query.post({ where: { id } }, info);
+    },
+    permission(parent, args, ctx, info) {
+      return ctx.db.query.permissions(info);
     }
   },
   Mutation: {
@@ -38,6 +41,17 @@ const resolvers = {
           data: {
             title,
             code
+          }
+        },
+        info
+      );
+    },
+    createPermission(parent, { name, isAllowed }, ctx, info) {
+      return ctx.db.mutation.createPermission(
+        {
+          data: {
+            name,
+            isAllowed
           }
         },
         info
@@ -76,6 +90,9 @@ const resolvers = {
     deleteState(parent, { title }, ctx, info) {
       return ctx.db.mutation.deleteState({ where: { title } }, info);
     },
+    deletePermission(parent, { name }, ctx, info) {
+      return ctx.db.mutation.deletePermission({ where: { name } }, info);
+    },
     deletePost(parent, { id }, ctx, info) {
       return ctx.db.mutation.deletePost({ where: { id } }, info);
     },
@@ -90,6 +107,22 @@ const resolvers = {
           data: {
             title: newTitle,
             code
+          }
+        },
+        info
+      );
+    },
+    updatePermission(parent, args, ctx, info) {
+      const name = args.name,
+        newName = args.input.name,
+        isAllowed = args.input.isAllowed;
+
+      return ctx.db.mutation.updatePermission(
+        {
+          where: { name },
+          data: {
+            name: newName,
+            isAllowed
           }
         },
         info

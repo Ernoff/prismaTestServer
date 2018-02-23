@@ -1,4 +1,4 @@
-# import Post, State, Individual from "./generated/prisma.graphql"
+# import Permission, Post, State, Individual from "./generated/prisma.graphql"
 
 type Query {
   feed: [Post!]!
@@ -6,6 +6,7 @@ type Query {
   post(id: ID!): Post
   state: [State!]!
   individual: [Individual!]!
+  permission: [Permission!]!
 }
 
 input IndividualInput{
@@ -35,13 +36,21 @@ input StateInput {
   code: String!
 }
 
+input PermissionInput  {
+  name: String!
+  isAllowed: Boolean
+}
+
 type Mutation {
   createIndividual(input: IndividualInput!): Individual
   createDraft(title: String!, text: String): Post
   createState(title: String!, code: String): State
+  createPermission(name: String!, isAllowed: Boolean): Permission
   deleteState(title: String!): State
+  deletePermission(name: String!): Permission
   deleteIndividual(id: ID!): Individual
   updateState(title: String!, input: StateInput!) : State
+  updatePermission(name: String!, input: PermissionInput!) : Permission
   updateIndividual(id: ID!, input: IndividualInput!) : Individual
   deletePost(id: ID!): Post
   publish(id: ID!): Post
