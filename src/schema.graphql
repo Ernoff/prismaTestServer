@@ -38,14 +38,14 @@ input StateInput {
 
 input PermissionInput  {
   name: String!
-  isAllowed: Boolean
+  isAllowed: String
 }
 
 type Mutation {
   createIndividual(input: IndividualInput!): Individual
   createDraft(title: String!, text: String): Post
   createState(title: String!, code: String): State
-  createPermission(name: String!, isAllowed: Boolean): Permission
+  createPermission(name: String!, isAllowed: String): Permission
   deleteState(title: String!): State
   deletePermission(name: String!): Permission
   deleteIndividual(id: ID!): Individual

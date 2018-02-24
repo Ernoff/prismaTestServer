@@ -36,5 +36,5 @@ type Individual {
 type Permission {
   id: ID! @unique
   name: String! @unique
-  isAllowed: Boolean @default(value: false)
+  isAllowed: String
 }
