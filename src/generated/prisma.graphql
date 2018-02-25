@@ -30,7 +30,7 @@ type Individual implements Node {
 type Permission implements Node {
   id: ID!
   name: String!
-  isAllowed: Boolean
+  isAllowed: String
 }
 
 type Post implements Node {
@@ -537,7 +537,7 @@ type PermissionConnection {
 
 input PermissionCreateInput {
   name: String!
-  isAllowed: Boolean
+  isAllowed: String
 }
 
 type PermissionEdge {
@@ -561,7 +561,7 @@ enum PermissionOrderByInput {
 type PermissionPreviousValues {
   id: ID!
   name: String!
-  isAllowed: Boolean
+  isAllowed: String
 }
 
 type PermissionSubscriptionPayload {
@@ -583,7 +583,7 @@ input PermissionSubscriptionWhereInput {
 
 input PermissionUpdateInput {
   name: String
-  isAllowed: Boolean
+  isAllowed: String
 }
 
 input PermissionWhereInput {
@@ -617,8 +617,20 @@ input PermissionWhereInput {
   name_not_starts_with: String
   name_ends_with: String
   name_not_ends_with: String
-  isAllowed: Boolean
-  isAllowed_not: Boolean
+  isAllowed: String
+  isAllowed_not: String
+  isAllowed_in: [String!]
+  isAllowed_not_in: [String!]
+  isAllowed_lt: String
+  isAllowed_lte: String
+  isAllowed_gt: String
+  isAllowed_gte: String
+  isAllowed_contains: String
+  isAllowed_not_contains: String
+  isAllowed_starts_with: String
+  isAllowed_not_starts_with: String
+  isAllowed_ends_with: String
+  isAllowed_not_ends_with: String
 }
 
 input PermissionWhereUniqueInput {
